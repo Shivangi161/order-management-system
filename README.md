@@ -15,8 +15,10 @@ Whenever an order place button is clicked ->
 
 RESILIENCY
 Circuit Breaker : Resilience4j 
-Why resilience4j - 
+Why resilience4j - It is lightweight as compared to its counterparts
 Circuit breaker is used when the pricing API has not responded even after 3 retries.
+We can add rate limiting as well on our APIs for Internet security, as DoS attacks can tank a server with unlimited API requests.
+
 
 SCALABILITY
 Will be vertically scaling data store , i.e. more CPU, more memory or more storage
