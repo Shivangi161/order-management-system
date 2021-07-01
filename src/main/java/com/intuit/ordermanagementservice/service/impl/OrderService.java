@@ -85,6 +85,5 @@ public class OrderService implements OrderManager {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No order found for this order id");
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Payment status updated successfully for order id : "+orderId);
-
     }
 }
