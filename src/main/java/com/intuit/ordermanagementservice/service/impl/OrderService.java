@@ -5,6 +5,7 @@ import com.intuit.ordermanagementservice.clients.PaymentService;
 import com.intuit.ordermanagementservice.dao.OrderDAO;
 import com.intuit.ordermanagementservice.enitities.Order;
 import com.intuit.ordermanagementservice.enitities.OrderItem;
+import com.intuit.ordermanagementservice.enums.OrderType;
 import com.intuit.ordermanagementservice.enums.PaymentStatus;
 import com.intuit.ordermanagementservice.exception.OrderNotPlacedException;
 import com.intuit.ordermanagementservice.exception.PriceChangedException;
@@ -75,6 +76,9 @@ public class OrderService implements OrderManager {
                 throw new IllegalArgumentException("Order id and payment status can't be null");
             }
             Order order = orderDAO.getOrderById(orderId);
+            if( OrderType.PREPAID.equals(order.getOrderType()) && PaymentStatus.PAYMENT_FAILED.equals(paymentStatus) ){
+                order.setOrderType(OrderType.COD);
+            }
             order.setPaymentStatus(paymentStatus);
             orderDAO.saveOrder(order);
         } catch (IllegalArgumentException e) {

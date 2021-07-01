@@ -1,6 +1,7 @@
 package com.intuit.ordermanagementservice.enitities;
 
 import com.intuit.ordermanagementservice.enums.OrderStatus;
+import com.intuit.ordermanagementservice.enums.OrderType;
 import com.intuit.ordermanagementservice.enums.PaymentStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,5 +40,8 @@ public class Order {
     private PaymentStatus paymentStatus;
 
     private Double orderPrice;
+
+    @Enumerated(EnumType.STRING)
+    private OrderType orderType = OrderType.PREPAID;
 
 }
