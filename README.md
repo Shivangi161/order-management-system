@@ -1,5 +1,10 @@
 # order-management-system
 
+To setup this project, prerequisites are :
+1. Mysql
+2. create a database with name = 'oms'
+3. put password and username in application.properties
+
 Whenever an order place button is clicked -> 
 1. Fetch the price quotes
 2. Verify if there has been a price update 
@@ -11,6 +16,7 @@ Whenever an order place button is clicked ->
     5. If failed then create an order with payment status Failed and place COD order if wanted -> depends on project requirements
     6. If successful, update the payment status
 4. Else show required failure response
+
 
 
 RESILIENCY
