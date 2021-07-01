@@ -109,16 +109,16 @@ public class OrderServiceTest {
 
 
     @Test
-    public void updatePaymentStatusForOrder_ValidParamsPassed_PaymentStatusUpdated()  {
+    public void updatePaymentStatusForOrder_ValidParamsPassed_PaymentStatusUpdated() {
         when(orderDAO.getOrderById(any())).thenReturn(order);
         ResponseEntity responseEntity = orderService.updatePaymentStatusForOrder(PaymentStatus.PAID, 1L);
-        assertEquals(HttpStatus.ACCEPTED,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
     }
 
     @Test
     public void updatePaymentStatusForOrder_PaymentStatusPassedAsNull_BadRequest() {
         ResponseEntity responseEntity = orderService.updatePaymentStatusForOrder(null, 1L);
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
     @Test
@@ -126,13 +126,20 @@ public class OrderServiceTest {
         when(orderDAO.getOrderById(any())).thenReturn(order);
         when(orderDAO.saveOrder(any())).thenThrow(OrderNotPlacedException.class);
         ResponseEntity responseEntity = orderService.updatePaymentStatusForOrder(PaymentStatus.PAID, 1L);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
     }
 
     @Test
     public void updatePaymentStatusForOrder_NoOrderFoundForOrderId_BadRequest() throws OrderNotPlacedException {
         when(orderDAO.getOrderById(any())).thenThrow(EntityNotFoundException.class);
         ResponseEntity responseEntity = orderService.updatePaymentStatusForOrder(PaymentStatus.PAID, 1L);
-        assertEquals(HttpStatus.BAD_REQUEST,responseEntity.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void updatePaymentStatusForOrder_paymentFailedForPrepaidOrder_orderMarkedasCOD() {
+        when(orderDAO.getOrderById(any())).thenReturn(order);
+        ResponseEntity responseEntity = orderService.updatePaymentStatusForOrder(PaymentStatus.PAYMENT_FAILED, 1L);
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
     }
 }
